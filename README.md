@@ -1,111 +1,66 @@
 # BOP
-Bayesian Optimization of Structural Anchor Prompting for Large Language Models
+🚀 Bayesian Optimization of Structural Anchor Prompting for Large Language Models
 
-BOP-SAP (Bayesian Optimization – Structural Anchor Prompting) is a research framework for systematic prompt optimization in large language models (LLMs). The method formalizes prompt construction as a structured optimization problem over modular components and applies Bayesian Optimization (Tree-structured Parzen Estimator, TPE) to identify high-performing prompt configurations for biomedical relation extraction tasks.
+BOP-SAP (Bayesian Optimization – Structural Anchor Prompting) is an open-source research framework that advances systematic prompt optimization for large language models (LLMs). By combining structured anchor-based prompt design with Bayesian Optimization (Tree-structured Parzen Estimator, TPE), BOP-SAP enables automated, reproducible, and interpretable optimization of prompt configurations for biomedical gene–gene interaction classification tasks.
 
-The framework is developed for gene–gene interaction classification, including activation, inhibition, and phosphorylation prediction. Rather than relying on manual prompt engineering, BOP-SAP performs automated search across structured prompt components while keeping model parameters fixed, thereby isolating the structural contribution of prompt design to model performance.
+BOP-SAP formalizes prompt construction as a discrete search problem across modular components (Role, Aim, Description, Question). The framework supports state-of-the-art LLMs including GPT-4o, GPT-4, Cohere Command-R, and Llama 3.x, providing a scalable and research-oriented alternative to manual prompt engineering approaches.
 
-<p align="center"> <img src="assets/figure1_framework.png" alt="Framework Overview" width="800"/> </p>
-Overview
+<p align="center"> <img src="assets/figure1_framework.png" alt="BOP-SAP Workflow" width="600"/> </p>
+🌟 Features
 
-BOP-SAP consists of four principal stages:
+Automated Bayesian Prompt Optimization: Uses Optuna’s Tree-structured Parzen Estimator (TPE) to iteratively explore and optimize structured prompt components.
 
-Structured Prompt Design
-Prompts are constructed from predefined components:
+Structured Anchor Design: Modular prompt architecture based on Role, Aim, Description, and Question components.
 
-Role
+Multi-LLM Support: Compatible with GPT-4o, GPT-4, GPT-3.5, Cohere Command-R, and Llama 3.x.
 
-Aim
+Reproducible Optimization Pipeline: Logged trials, saved study objects, deterministic evaluation procedures.
 
-Description
+Representation-Level Analysis: Optional hidden-state extraction, cosine similarity measurement, and clustering analysis.
 
-Question
+Open-source & Extensible: Designed for integration of additional models, datasets, and optimization strategies.
 
-Search Space Definition
-The Cartesian product of prompt components defines a discrete optimization space.
+⚡ Quick Start
 
-Bayesian Optimization
-Optuna’s Tree-structured Parzen Estimator proposes candidate configurations and iteratively refines the search distribution using validation performance as the objective.
-
-Evaluation
-Selected prompts are evaluated on held-out data using F1-score and Matthews Correlation Coefficient (MCC). Optional representation-level analyses examine structural consistency.
-
-The LLM backbone remains frozen throughout optimization.
-
-Supported Models
-
-The framework is model-agnostic and supports:
-
-GPT-4o
-
-GPT-4
-
-GPT-3.5
-
-Cohere Command-R
-
-Llama 3.x (local inference)
-
-Additional models can be integrated via the llm_clients interface.
-
-Installation
-
-Clone the repository:
+Clone the Repository
 
 git clone https://github.com/yourusername/BOP-SAP.git
 cd BOP-SAP
 
-Install dependencies:
+Install Dependencies
 
 pip install -r requirements.txt
 
-Optional (Conda environment):
-
-conda env create -f environment.yml
-conda activate bop-sap
-Running Optimization
-
-Execute Bayesian prompt search:
+Run Bayesian Optimization
 
 python src/scripts/run_optimization.py --model gpt-4o
 
-Evaluate the best-performing configuration:
+Evaluate Optimized Prompt
 
 python src/scripts/evaluate_model.py --model gpt-4o
+🎬 Demo
 
-Optimization studies, logs, and selected prompts are stored under the results/ directory.
+(Optional: add experiment visualization or workflow GIF here)
 
-Reproducibility
+assets/demo.gif
+🖥️ Usage
 
-The framework ensures experimental reproducibility through:
+Configure model parameters in configs/models.yaml
 
-Fixed random seeds
+Adjust search parameters in configs/optimization.yaml
 
-Logged optimization trials
+Run optimization scripts under src/scripts/
 
-Stored Optuna study objects
+Results are saved under the results/ directory
 
-Version-controlled configuration files
+📁 Project Structure
 
-Deterministic evaluation procedures
+Click here to view the full Project Structure →
 
-Project Structure
-BOP-SAP/
-├── assets/                  # Figures
-├── configs/                 # Model and optimization settings
-├── data/                    # Datasets and splits
-├── src/
-│   ├── bop/                 # Core optimization framework
-│   ├── llm_clients/         # Model interfaces
-│   ├── evaluation/          # Metrics and scoring
-│   └── analysis/            # Representation analysis
-├── results/                 # Optimization outputs
-├── docs/                    # Documentation
-└── tests/                   # Unit tests
-Citation
+📖 Citation
 @article{Azam2026BOPSAP,
   title={Bayesian Optimization of String-Based Structural Anchor Prompting for Large Language Models},
   author={Muhammad Azam and Shuai Zeng and Hasanain Aldihis and Mihail Popescu and Toni Kazic and Duolin Wang and Dong Xu},
-  year={2026},
-  journal={Under Review}
+  journal={Under Review},
+  year={2026}
 }
