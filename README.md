@@ -1,77 +1,60 @@
 # BOP
-# 🚀 Applications of Large Language Models and Prompt Optimization in Image Understanding of Biological Pathway Figures
+🚀 Bayesian Optimization of Structural Anchor Prompting for Large Language Models
 
-**LLM-GPV (Large Language Model - Genetic Prompt Vision)** is an open-source platform that revolutionizes the extraction of gene interactions from complex biological pathway images. By combining large language models (LLMs) with automated genetic algorithm-based prompt optimization, LLM-GPV delivers high-throughput, robust, and interpretable extraction of both directional and non-directional gene relationships.LLM-GPV supports state-of-the-art multimodal LLMs (including Llama 3.2V) and is optimized for tumor signaling pathway curation, providing a scalable, research-friendly alternative to traditional OCR-based approaches.
+BOP-SAP (Bayesian Optimization – Structural Anchor Prompting) is an open-source research framework for systematic prompt optimization in large language models (LLMs). The framework integrates structured anchor-based prompt design with Bayesian Optimization (Tree-structured Parzen Estimator, TPE) to enable automated, reproducible, and interpretable optimization of prompt configurations for biomedical gene–gene interaction classification tasks.
 
-<p align="center">
-  <img src="https://github.com/Muh-aza/LLM_GPV/raw/main/Results/Fig-010.jpg" alt="LLM-GPV Workflow" width="600"/>
-</p>
+Rather than relying on manual prompt engineering, BOP-SAP formulates prompt construction as a discrete optimization problem over modular components (Role, Aim, Description, Question). The method keeps model parameters fixed, isolating the structural contribution of prompt design to downstream performance.
 
----
+<p align="center"> <img src="assets/figure1_framework.png" alt="BOP-SAP Framework Overview" width="700"/> </p>
+🌟 Features
 
+Automated Bayesian Prompt Optimization – Uses Optuna’s Tree-structured Parzen Estimator (TPE) to iteratively search structured prompt configurations.
 
-## 🌟 Features
+Structured Anchor Design – Modular architecture based on Role, Aim, Description, and Question components.
 
-- **Automated Prompt Optimization:** Uses Genetic Algorithms (GA) to iteratively evolve and optimize prompts, boosting LLM performance in extracting gene relationships from images.
-- **Multimodal LLM Support:** Benchmarked with GPT-4oV, Claude-3.5V, Gemini-1.5V, and Llama 3.2V for both text and image input.
-- **Intuitive Web Platform:** User-friendly interface for uploading pathway images, selecting optimized prompt templates, and reviewing extraction results.
-- **Interactive Workflow:** Dynamic cross-verification and visual feedback, supporting manual review and research workflows.
-- **Open-source & Extensible:** Built for extensibility—integrate new models or prompt optimization strategies.
----
+Multi-LLM Support – Compatible with GPT-4o, GPT-4, GPT-3.5, Cohere Command-R, and Llama 3.x.
 
-## ⚡ Quick Start
+Reproducible Pipeline – Fixed seeds, logged trials, stored optimization studies.
 
-1. **Clone the Repository**
-    ```bash
-    git clone https://github.com/Muh-aza/LLM_GPV.git
-    cd LLM_GPV
-    ```
-2. **Install Dependencies**
-    ```bash
-    pip install -r requirements.txt
-    ```
-3. **Launch the Web Application**
-    ```bash
-    python app.py
-    ```
-4. **Use the Platform**
-    - Open your browser to `http://localhost:xxxx` or visit the [live demo](https://gene-path-analyzer.vercel.app/).
-    - Upload a pathway image, select a prompt, and extract gene interactions instantly.
+Extensible Framework – Supports integration of additional LLM backbones, datasets, and optimization strategies.
 
-## 🎬 Demo Video
+⚡ Quick Start
+1. Clone the Repository
+git clone https://github.com/yourusername/BOP-SAP.git
+cd BOP-SAP
+2. Install Dependencies
+pip install -r requirements.txt
 
-![](https://github.com/Muh-aza/LLM_GPV/raw/main/Results/GPV.gif)
----
+(Optional – Conda)
 
-## 🖥️ Demo
+conda env create -f environment.yml
+conda activate bop-sap
+3. Run Bayesian Optimization
+python src/scripts/run_optimization.py --model gpt-4o
+4. Evaluate Optimized Prompt
+python src/scripts/evaluate_model.py --model gpt-4o
 
-Try the live demo:  
-👉 [https://gene-path-analyzer.vercel.app/](https://gene-path-analyzer.vercel.app/)
+Results are stored in the results/ directory.
 
-<!--
-You can add a GIF or video demo here:
-![Demo GIF](https://github.com/Muh-aza/LLM_GPV/raw/main/assets/demo.gif)
-[▶️ Watch the demo video (MP4)](https://github.com/Muh-aza/LLM_GPV/raw/main/Results/GPV.mp4)
-
--->
-
----
-
-## 📁 Project Structure
-
-[Click here to view the full Project Structure &rarr;](./PROJECT_STRUCTURE1.md)
-
----
-
-## 📖 Citation
-
-```bibtex
-@article{Azam2025LLMGPV,
-  title={Applications of Large Language Models and Prompt Optimization for Knowledge Extraction from Biological Pathway Figures},
-  author={Muhammad Azam and Shuai Zeng and Hasanain Aldihis and Mihail Popescu and Dong Xu},
-  journal={IEEE Journal of Biomedical and Health Informatics},
-  year={2025},
-  note={DOI: 10.1109/JBHI.2025.3631538}
+📁 Project Structure
+BOP-SAP/
+├── assets/                  # Figures
+├── configs/                 # Model and optimization settings
+├── data/                    # Datasets and splits
+├── src/
+│   ├── bop/                 # Core optimization framework
+│   ├── llm_clients/         # Model interfaces
+│   ├── evaluation/          # Metrics and scoring
+│   └── analysis/            # Representation analysis
+├── results/                 # Optimization outputs
+├── docs/                    # Documentation
+└── tests/                   # Unit tests
+📖 Citation
+@article{Azam2026BOPSAP,
+  title={Bayesian Optimization of String-Based Structural Anchor Prompting for Large Language Models},
+  author={Muhammad Azam and Shuai Zeng and Hasanain Aldihis and Mihail Popescu and Toni Kazic and Duolin Wang and Dong Xu},
+  journal={Under Review},
+  year={2026}
 }
 ```
   note={DOI: 10.1109/JBHI.2025.3631538}
