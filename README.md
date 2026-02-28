@@ -5,7 +5,7 @@ BOP-SAP (Bayesian Optimization – Structural Anchor Prompting) is an open-sourc
 
 
 <p align="center">
-  <img src="(https://github.com/Muh-aza/BOP/blob/main/Result/Fig1.png)" alt="LLM-GPV Workflow" width="600"/>
+  <img src="https://raw.githubusercontent.com/Muh-aza/BOP/main/Result/1.png" alt="BOP Framework Overview" width="600"/>
 </p>
 
 #🌟 Features
