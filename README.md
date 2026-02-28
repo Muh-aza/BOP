@@ -1,12 +1,14 @@
 # BOP
 🚀 Bayesian Optimization of Structural Anchor Prompting for Large Language Models
 
-BOP-SAP (Bayesian Optimization – Structural Anchor Prompting) is an open-source research framework for systematic prompt optimization in large language models (LLMs). The framework integrates structured anchor-based prompt design with Bayesian Optimization (Tree-structured Parzen Estimator, TPE) to enable automated, reproducible, and interpretable optimization of prompt configurations for biomedical gene–gene interaction classification tasks.
+BOP-SAP (Bayesian Optimization – Structural Anchor Prompting) is an open-source research framework for systematic prompt optimization in large language models (LLMs). The framework integrates structured anchor-based prompt design with Bayesian Optimization (Tree-structured Parzen Estimator, TPE) to enable automated, reproducible, and interpretable optimization of prompt configurations for biomedical gene–gene interaction classification tasks. Rather than relying on manual prompt engineering, BOP-SAP formulates prompt construction as a discrete optimization problem over modular components (Role, Aim, Description, Question). The method keeps model parameters fixed, isolating the structural contribution of prompt design to downstream performance.
 
-Rather than relying on manual prompt engineering, BOP-SAP formulates prompt construction as a discrete optimization problem over modular components (Role, Aim, Description, Question). The method keeps model parameters fixed, isolating the structural contribution of prompt design to downstream performance.
 
+<p align="center">
+  <img src="(https://github.com/Muh-aza/BOP/blob/main/Result/1.png)" alt="LLM-GPV Workflow" width="600"/>
+</p>
 <p align="center"> <img src="assets/figure1_framework.png" alt="BOP-SAP Framework Overview" width="700"/> </p>
-🌟 Features
+#🌟 Features
 
 Automated Bayesian Prompt Optimization – Uses Optuna’s Tree-structured Parzen Estimator (TPE) to iteratively search structured prompt configurations.
 
