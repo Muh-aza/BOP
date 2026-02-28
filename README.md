@@ -5,9 +5,9 @@ BOP-SAP (Bayesian Optimization – Structural Anchor Prompting) is an open-sourc
 
 
 <p align="center">
-  <img src="(https://github.com/Muh-aza/BOP/blob/main/Result/1.png)" alt="LLM-GPV Workflow" width="600"/>
+  <img src="(https://github.com/Muh-aza/BOP/blob/main/Result/Fig1.png)" alt="LLM-GPV Workflow" width="600"/>
 </p>
-<p align="center"> <img src="assets/figure1_framework.png" alt="BOP-SAP Framework Overview" width="700"/> </p>
+
 #🌟 Features
 
 Automated Bayesian Prompt Optimization – Uses Optuna’s Tree-structured Parzen Estimator (TPE) to iteratively search structured prompt configurations.
