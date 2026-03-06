@@ -55,6 +55,8 @@ BOP-SAP/
 ├── docs/                    # Documentation
 └── tests/                   # Unit tests
 ## 📖 Citation
+
+```bibtex
 @article{Azam2026BOPSAP,
   title={Bayesian Optimization of String-Based Structural Anchor Prompting for Large Language Models},
   author={Muhammad Azam and Shuai Zeng and Hasanain Aldihis and Mihail Popescu and Toni Kazic and Duolin Wang and Dong Xu},
