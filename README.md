@@ -25,9 +25,11 @@ BOP-SAP (Bayesian Optimization – Structural Anchor Prompting) is an open-sourc
 
 ## ⚡ Quick Start
 1. Clone the Repository
+```bash
 git clone https://github.com/yourusername/BOP-SAP.git
 cd BOP-SAP
-2. Install Dependencies
+```
+3. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
