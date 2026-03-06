@@ -1,4 +1,7 @@
-# BOP
+# # 📁 Project Structure
+
+This document provides an overview of the file and folder organization of the BOP-SAP (Bayesian Optimization of Structural Anchor Prompting) framework. 
+The repository follows a modular architecture designed to support reproducible research, scalable experimentation, and clear separation of core framework components.
 ---
 
 ```text
