@@ -46,6 +46,9 @@ python src/scripts/evaluate_model.py --model gpt-4o
 Results are stored in the results/ directory.
 ```
 ## 📁 Project Structure
+
+[Click here to view the full Project Structure →](./PROJECT_STRUCTURE1.md)
+
 BOP-SAP/
 │
 ├── README.md
