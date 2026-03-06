@@ -36,7 +36,7 @@ pip install -r requirements.txt
 conda env create -f environment.yml
 conda activate bop-sap
 ```
- 3.  **   **Run Bayesian Optimization**
+ 3. **Run Bayesian Optimization**
 ```bash
 python src/scripts/run_optimization.py --model gpt-4o
 ```
