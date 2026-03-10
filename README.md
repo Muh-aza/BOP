@@ -72,7 +72,7 @@ Results are stored in the results/ directory.
   year={2026}
 }
 ```
-  note={DOI: 10.1109/JBHI.2025.3631538}
+
 }
 
 
