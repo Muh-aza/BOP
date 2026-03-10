@@ -24,8 +24,15 @@ BOP-SAP (Bayesian Optimization – Structural Anchor Prompting) is an open-sourc
 ---
 
 ## ⚡ Quick Start
+### Bayesian Optimization
 
-[![Optuna Documentation](https://img.shields.io/badge/Optuna-Documentation-blue)](https://optuna.readthedocs.io/en/stable/)
+BOP-SAP performs prompt optimization using Bayesian Optimization implemented with the **Optuna** framework.
+
+Optuna documentation can be found here:  [![Optuna Documentation](https://img.shields.io/badge/Optuna-Documentation-blue)](https://optuna.readthedocs.io/en/stable/)
+
+The optimization process uses the **Tree-structured Parzen Estimator (TPE) sampler**, which models the distribution of promising and non-promising configurations to efficiently explore the prompt search space.
+
+More information about the TPE sampler is available here: 
 [![Optuna TPE Sampler](https://img.shields.io/badge/Optuna-TPE%20Sampler-green)](https://optuna.readthedocs.io/en/stable/reference/samplers/generated/optuna.samplers.TPESampler.html)
 
 ---
