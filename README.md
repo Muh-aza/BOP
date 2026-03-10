@@ -67,7 +67,7 @@ Results are stored in the results/ directory.
 ```bibtex
 @article{Azam2026BOPSAP,
   title={Bayesian Optimization of String-Based Structural Anchor Prompting for Large Language Models},
-  author={Muhammad Azam and Shuai Zeng and Hasanain Aldihis and Mihail Popescu and Toni Kazic and Duolin Wang and Dong Xu},
+  author={Muhammad Azam and Shuai Zeng and Hasanain Aldihis and Dong Xu},
   journal={Under Review},
   year={2026}
 }
