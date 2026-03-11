@@ -63,8 +63,7 @@ Results are stored in the results/ directory.
 
 ## 📊 Dataset
 
-The BOP-SAP framework uses curated **biomedical signaling pathway datasets** containing gene–gene relationships extracted from KEGG pathways.  
-KEGG pathways represent biological interaction networks describing molecular signaling and gene relationships in cells. :contentReference[oaicite:0]{index=0}
+The BOP-SAP framework uses curated **biomedical signaling pathway datasets** containing gene–gene relationships extracted from KEGG pathways.  KEGG pathways represent biological interaction networks describing molecular signaling and gene relationships in cells. 
 
 ### Available Pathway Datasets
 
@@ -93,7 +92,6 @@ KEGG pathways represent biological interaction networks describing molecular sig
 ### Gene Relationship Data
 
 The datasets contain **gene–gene interaction relationships derived from KEGG signaling pathways**, which are used to evaluate the effectiveness of structural anchor prompt optimization in large language models.  
-For example, the MAPK signaling pathway describes conserved molecular cascades involved in cell growth and differentiation. :contentReference[oaicite:1]{index=1}
 
 ## 📖 Citation
 
