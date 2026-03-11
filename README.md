@@ -68,37 +68,27 @@ KEGG pathways represent biological interaction networks describing molecular sig
 
 ### Available Pathway Datasets
 
-- **MAPK Signaling Pathway**   [![Dataset](https://img.shields.io/badge/Dataset-MAPK%20Signaling-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
+- **MAPK Signaling Pathway**[![Dataset](https://img.shields.io/badge/Dataset-MAPK%20Signaling-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
 
-- **EGFR Tyrosine Kinase Inhibitor Resistance**  
-[![Dataset](https://img.shields.io/badge/Dataset-EGFR%20Resistance-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
+- **EGFR Tyrosine Kinase Inhibitor Resistance** [![Dataset](https://img.shields.io/badge/Dataset-EGFR%20Resistance-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
 
-- **Endocrine Resistance**  
-[![Dataset](https://img.shields.io/badge/Dataset-Endocrine%20Resistance-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
+- **Endocrine Resistance**  [![Dataset](https://img.shields.io/badge/Dataset-Endocrine%20Resistance-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
 
-- **Platinum Drug Resistance**  
-[![Dataset](https://img.shields.io/badge/Dataset-Platinum%20Drug%20Resistance-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
+- **Platinum Drug Resistance** [![Dataset](https://img.shields.io/badge/Dataset-Platinum%20Drug%20Resistance-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
 
-- **ErbB Signaling Pathway**  
-[![Dataset](https://img.shields.io/badge/Dataset-ErbB%20Pathway-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
+- **ErbB Signaling Pathway** [![Dataset](https://img.shields.io/badge/Dataset-ErbB%20Pathway-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
 
-- **Ras Signaling Pathway**  
-[![Dataset](https://img.shields.io/badge/Dataset-Ras%20Pathway-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
+- **Ras Signaling Pathway** [![Dataset](https://img.shields.io/badge/Dataset-Ras%20Pathway-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
 
-- **Rap1 Signaling Pathway**  
-[![Dataset](https://img.shields.io/badge/Dataset-Rap1%20Pathway-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
+- **Rap1 Signaling Pathway** [![Dataset](https://img.shields.io/badge/Dataset-Rap1%20Pathway-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
 
-- **cGMP-PKG Signaling Pathway**  
-[![Dataset](https://img.shields.io/badge/Dataset-cGMP--PKG%20Pathway-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
+- **cGMP-PKG Signaling Pathway** [![Dataset](https://img.shields.io/badge/Dataset-cGMP--PKG%20Pathway-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
 
-- **cAMP Signaling Pathway**  
-[![Dataset](https://img.shields.io/badge/Dataset-cAMP%20Pathway-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
+- **cAMP Signaling Pathway**  [![Dataset](https://img.shields.io/badge/Dataset-cAMP%20Pathway-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
 
-- **Autophagy – Animal**  
-[![Dataset](https://img.shields.io/badge/Dataset-Autophagy%20Animal-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
+- **Autophagy – Animal** [![Dataset](https://img.shields.io/badge/Dataset-Autophagy%20Animal-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
 
-- **Endocytosis**  
-[![Dataset](https://img.shields.io/badge/Dataset-Endocytosis-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
+- **Endocytosis** [![Dataset](https://img.shields.io/badge/Dataset-Endocytosis-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
 
 ### Gene Relationship Data
 
