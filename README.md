@@ -61,6 +61,49 @@ Results are stored in the results/ directory.
 
 [Click here to view the full Project Structure →](./Project1.md)
 
+## 📊 Dataset
+
+The BOP-SAP framework uses curated **biomedical signaling pathway datasets** containing gene–gene relationships extracted from KEGG pathways.  
+KEGG pathways represent biological interaction networks describing molecular signaling and gene relationships in cells. :contentReference[oaicite:0]{index=0}
+
+### Available Pathway Datasets
+
+- **MAPK Signaling Pathway**   [![Dataset](https://img.shields.io/badge/Dataset-MAPK%20Signaling-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
+
+- **EGFR Tyrosine Kinase Inhibitor Resistance**  
+[![Dataset](https://img.shields.io/badge/Dataset-EGFR%20Resistance-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
+
+- **Endocrine Resistance**  
+[![Dataset](https://img.shields.io/badge/Dataset-Endocrine%20Resistance-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
+
+- **Platinum Drug Resistance**  
+[![Dataset](https://img.shields.io/badge/Dataset-Platinum%20Drug%20Resistance-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
+
+- **ErbB Signaling Pathway**  
+[![Dataset](https://img.shields.io/badge/Dataset-ErbB%20Pathway-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
+
+- **Ras Signaling Pathway**  
+[![Dataset](https://img.shields.io/badge/Dataset-Ras%20Pathway-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
+
+- **Rap1 Signaling Pathway**  
+[![Dataset](https://img.shields.io/badge/Dataset-Rap1%20Pathway-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
+
+- **cGMP-PKG Signaling Pathway**  
+[![Dataset](https://img.shields.io/badge/Dataset-cGMP--PKG%20Pathway-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
+
+- **cAMP Signaling Pathway**  
+[![Dataset](https://img.shields.io/badge/Dataset-cAMP%20Pathway-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
+
+- **Autophagy – Animal**  
+[![Dataset](https://img.shields.io/badge/Dataset-Autophagy%20Animal-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
+
+- **Endocytosis**  
+[![Dataset](https://img.shields.io/badge/Dataset-Endocytosis-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2)
+
+### Gene Relationship Data
+
+The datasets contain **gene–gene interaction relationships derived from KEGG signaling pathways**, which are used to evaluate the effectiveness of structural anchor prompt optimization in large language models.  
+For example, the MAPK signaling pathway describes conserved molecular cascades involved in cell growth and differentiation. :contentReference[oaicite:1]{index=1}
 
 ## 📖 Citation
 
