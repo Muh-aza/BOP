@@ -4,7 +4,7 @@
 BOP-SAP (Bayesian Optimization – Structural Anchor Prompting) is an open-source research framework for systematic prompt optimization in large language models (LLMs). The framework integrates structured anchor-based prompt design with Bayesian Optimization (Tree-structured Parzen Estimator, TPE) to enable automated, reproducible, and interpretable optimization of prompt configurations for biomedical gene–gene interaction classification tasks. Rather than relying on manual prompt engineering, BOP-SAP formulates prompt construction as a discrete optimization problem over modular components (Role, Aim, Description, Question). The method keeps model parameters fixed, isolating the structural contribution of prompt design to downstream performance.
 
 <p align="center">
-  <img src="https://github.com/Muh-aza/BOP/raw/main/Result/1.png" alt="BOP Framework Overview" width="600"/>
+  <img src="https://github.com/Muh-aza/BOP/raw/main/Result/Fig1.png" alt="BOP Framework Overview" width="600"/>
 </p>
 
 ## 🌟 Features
