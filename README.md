@@ -22,7 +22,6 @@ BOP-SAP (Bayesian Optimization – Structural Anchor Prompting) is an open-sourc
 - **Open-source & Extensible:** Designed for integration of additional LLM backbones, datasets, and optimization strategies.
 
 ---
-
 ## ⚡ Quick Start
 ### Bayesian Optimization
 
@@ -60,6 +59,28 @@ Results are stored in the results/ directory.
 ## 📁 Project Structure
 
 [Click here to view the full Project Structure →](./Project1.md)
+## 📊 Dataset
+
+The BOP-SAP framework uses curated **biomedical signaling pathway datasets** containing gene–gene relationships extracted from KEGG pathways.
+
+
+###  Datasets
+
+| Pathway Dataset | Access |
+|-----------------|--------|
+| MAPK Signaling Pathway | [![Dataset](https://img.shields.io/badge/View-Dataset-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2) |
+| EGFR Tyrosine Kinase Inhibitor Resistance | [![Dataset](https://img.shields.io/badge/View-Dataset-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2) |
+| Endocrine Resistance | [![Dataset](https://img.shields.io/badge/View-Dataset-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2) |
+| Platinum Drug Resistance | [![Dataset](https://img.shields.io/badge/View-Dataset-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2) |
+| ErbB Signaling Pathway | [![Dataset](https://img.shields.io/badge/View-Dataset-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2) |
+| Ras Signaling Pathway | [![Dataset](https://img.shields.io/badge/View-Dataset-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2) |
+| Rap1 Signaling Pathway | [![Dataset](https://img.shields.io/badge/View-Dataset-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2) |
+| cGMP-PKG Signaling Pathway | [![Dataset](https://img.shields.io/badge/View-Dataset-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2) |
+| cAMP Signaling Pathway | [![Dataset](https://img.shields.io/badge/View-Dataset-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2) |
+| Autophagy – Animal | [![Dataset](https://img.shields.io/badge/View-Dataset-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2) |
+| Endocytosis | [![Dataset](https://img.shields.io/badge/View-Dataset-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2) |
+
+
 
 
 ## 📖 Citation
