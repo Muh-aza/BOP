@@ -1,0 +1,82 @@
+# ==============================================================================
+# BOP-SAP — Python Requirements
+# Bayesian Optimization of Structural Anchor Prompting
+# Python >= 3.10  required (X | Y union type hints)
+# ==============================================================================
+
+# ── LLM API Clients ────────────────────────────────────────────────────────────
+openai>=1.0.0                  # GPT-3.5 / GPT-4 / GPT-4o  (OpenAI API v1)
+cohere>=4.2.1                  # Cohere Command-R+           (Cohere SDK)
+
+# ── HuggingFace — LLaMA-3.1-8B-Instruct ──────────────────────────────────────
+transformers>=4.43.0           # LLaMA-3.1 support added in 4.43
+accelerate>=0.30.0             # device_map, mixed-precision helpers
+torch>=2.1.0                   # fp16; CUDA 11.8+ recommended
+bitsandbytes>=0.41.0           # INT8/INT4 quantisation (optional, lowers VRAM)
+sentencepiece>=0.1.99          # LLaMA-3.1 tokenizer
+protobuf>=3.20.0               # tokenizer proto files
+
+# ── Bayesian Optimisation ─────────────────────────────────────────────────────
+optuna>=3.5.0                  # TPE sampler, study management
+
+# ── Data & Machine Learning ───────────────────────────────────────────────────
+pandas>=2.0.0                  # DataFrames, Excel I/O
+numpy>=1.24.0                  # array operations
+scikit-learn>=1.4.0            # CHI, cosine similarity, F1, MCC, StandardScaler
+openpyxl>=3.1.2                # .xlsx read/write (pandas engine)
+
+# ── Visualisation ─────────────────────────────────────────────────────────────
+matplotlib>=3.8.0              # convergence curves, scatter plots, grids
+tqdm>=4.66.0                   # progress bars
+umap-learn>=0.5.6              # UMAP dimensionality reduction (Fig S2/S3)
+
+# ==============================================================================
+# INSTALLATION
+# ==============================================================================
+#
+#   pip install -r requirements.txt
+#
+#   # GPU PyTorch (replace cu118 with your CUDA version):
+#   pip install torch>=2.1.0 --index-url https://download.pytorch.org/whl/cu118
+#
+#   # Conda environment:
+#   conda env create -f environment.yml
+#   conda activate bop-sap
+#
+# ==============================================================================
+# MODEL REQUIREMENTS
+# ==============================================================================
+#
+# 1. GPT-3.5 / GPT-4 / GPT-4o
+#    - Set:  export OPENAI_API_KEY="sk-..."
+#    - No local GPU needed
+#    - Rate limits: GPT-3.5 = 60 rpm | GPT-4/4o = 10,000 rpm (enterprise)
+#
+# 2. Cohere Command-R+
+#    - Set:  export COHERE_API_KEY="..."
+#    - No local GPU needed
+#
+# 3. LLaMA-3.1-8B-Instruct  (meta-llama/Llama-3.1-8B-Instruct)
+#    - Set:  export HF_TOKEN="hf_..."
+#    - Accept Meta's license at: huggingface.co/meta-llama/Llama-3.1-8B-Instruct
+#    - Hardware (paper setup):  1× NVIDIA A100 80GB
+#    - Hardware (minimum):      1× NVIDIA RTX 3090/4090 (24 GB) for fp16
+#    - VRAM:   ~12 GB (fp16) | ~8 GB (INT8 via bitsandbytes)
+#    - CUDA:   11.8+
+#    - CPU-only supported but very slow
+#
+# ==============================================================================
+# ENVIRONMENT VARIABLES
+# ==============================================================================
+#
+#   export OPENAI_API_KEY="sk-..."
+#   export COHERE_API_KEY="..."
+#   export HF_TOKEN="hf_..."
+#
+#   # Optional path overrides:
+#   export BOP_PROMPT_PARTS="Data/prompt_parts.xlsx"
+#   export BOP_TRAINING_CSV="Data/training.csv"
+#   export BOP_VALID_CSV="Data/validation.csv"
+#   export BOP_TESTING_XLS="Data/testing.xlsx"
+#
+# ==============================================================================
