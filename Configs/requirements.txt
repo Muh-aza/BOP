@@ -1,82 +1,273 @@
 # ==============================================================================
-# BOP-SAP — Python Requirements
+# BOP-SAP — Complete Library & GPU Requirements
 # Bayesian Optimization of Structural Anchor Prompting
-# Python >= 3.10  required (X | Y union type hints)
+#
+# Paper: "Bayesian Optimization of ASCII Structural Anchors for Improving
+#         Large Language Model Performance in Biomedical Knowledge Mining"
+#
+# Python  : >= 3.10  (X | Y union type hints used throughout)
+# GPU     : NVIDIA (CUDA-enabled) — required for LLaMA-3.1 inference
+# CUDA    : 11.8 or 12.1 recommended
+# ==============================================================================
+
+
+# ==============================================================================
+# SECTION 1 — CORE PYTHON LIBRARIES
 # ==============================================================================
 
 # ── LLM API Clients ────────────────────────────────────────────────────────────
-openai>=1.0.0                  # GPT-3.5 / GPT-4 / GPT-4o  (OpenAI API v1)
-cohere>=4.2.1                  # Cohere Command-R+           (Cohere SDK)
+openai>=1.0.0                  # GPT-3.5 / GPT-4 / GPT-4o via OpenAI API v1
+cohere>=4.2.1                  # Cohere Command-R+ via Cohere Python SDK
 
-# ── HuggingFace — LLaMA-3.1-8B-Instruct ──────────────────────────────────────
-transformers>=4.43.0           # LLaMA-3.1 support added in 4.43
-accelerate>=0.30.0             # device_map, mixed-precision helpers
-torch>=2.1.0                   # fp16; CUDA 11.8+ recommended
-bitsandbytes>=0.41.0           # INT8/INT4 quantisation (optional, lowers VRAM)
-sentencepiece>=0.1.99          # LLaMA-3.1 tokenizer
-protobuf>=3.20.0               # tokenizer proto files
+# ── HuggingFace Stack — LLaMA-3.1-8B-Instruct ─────────────────────────────────
+transformers>=4.43.0           # LLaMA-3.1 support requires 4.43+
+accelerate>=0.30.0             # device_map, fp16/bf16 mixed-precision dispatch
+tokenizers>=0.19.0             # fast Rust tokenizer (dependency of transformers)
+huggingface-hub>=0.23.0        # model download, caching, HF_TOKEN auth
+sentencepiece>=0.1.99          # LLaMA-3.1 SentencePiece tokenizer
+protobuf>=3.20.0               # tokenizer .proto serialization files
+safetensors>=0.4.0             # fast model weight loading (replaces .bin)
+
+# ── PyTorch — install separately with NVIDIA CUDA build (see Section 3) ────────
+# torch>=2.1.0                 # DO NOT install via pip install -r directly
+#                              # Use the CUDA-specific command in Section 3
+
+# ── Optional: Quantisation (reduces VRAM 12 GB -> 8 GB) ──────────────────────
+bitsandbytes>=0.41.0           # INT8/INT4 quantisation via NVIDIA CUDA kernels
+                               # requires NVIDIA GPU compute capability >= 7.5
 
 # ── Bayesian Optimisation ─────────────────────────────────────────────────────
-optuna>=3.5.0                  # TPE sampler, study management
+optuna>=3.5.0                  # TPE sampler, study management, pruner
 
-# ── Data & Machine Learning ───────────────────────────────────────────────────
-pandas>=2.0.0                  # DataFrames, Excel I/O
-numpy>=1.24.0                  # array operations
+# ── Data Handling ─────────────────────────────────────────────────────────────
+pandas>=2.0.0                  # DataFrames, CSV/Excel I/O
+numpy>=1.24.0                  # array operations, embedding math
+openpyxl>=3.1.2                # .xlsx read/write engine for pandas
+
+# ── Machine Learning / Metrics ────────────────────────────────────────────────
 scikit-learn>=1.4.0            # CHI, cosine similarity, F1, MCC, StandardScaler
-openpyxl>=3.1.2                # .xlsx read/write (pandas engine)
+
+# ── Dimensionality Reduction ──────────────────────────────────────────────────
+umap-learn>=0.5.6              # UMAP 2D projections (Fig S2/S3)
+numba>=0.57.0                  # JIT compiler required by umap-learn
+pynndescent>=0.5.11            # approximate nearest-neighbour graph for UMAP
 
 # ── Visualisation ─────────────────────────────────────────────────────────────
-matplotlib>=3.8.0              # convergence curves, scatter plots, grids
-tqdm>=4.66.0                   # progress bars
-umap-learn>=0.5.6              # UMAP dimensionality reduction (Fig S2/S3)
+matplotlib>=3.8.0              # all plots: convergence, scatter, UMAP grids
+tqdm>=4.66.0                   # progress bars for predictions and embeddings
+
 
 # ==============================================================================
-# INSTALLATION
+# SECTION 2 — NVIDIA GPU REQUIREMENTS
 # ==============================================================================
 #
-#   pip install -r requirements.txt
+# BOP requires an NVIDIA GPU for LLaMA-3.1-8B-Instruct inference and
+# hidden-state extraction. The table below shows all supported configurations.
 #
-#   # GPU PyTorch (replace cu118 with your CUDA version):
-#   pip install torch>=2.1.0 --index-url https://download.pytorch.org/whl/cu118
+# ┌────────────────────────────────────────────────────────────────────────────┐
+# │  Specification       │  Requirement                                        │
+# ├────────────────────────────────────────────────────────────────────────────┤
+# │  GPU Vendor          │  NVIDIA  (AMD/Apple Silicon not supported)          │
+# │  GPU Architecture    │  Ampere / Turing / Hopper / Ada Lovelace           │
+# │  Compute Capability  │  >= 7.5  (required for bitsandbytes INT8/INT4)     │
+# ├────────────────────────────────────────────────────────────────────────────┤
+# │  PAPER SETUP         │  NVIDIA A100 80 GB SXM4                            │
+# │  (NAIRR allocation)  │  Allocations: NAIRR240246, NAIRR250134             │
+# ├────────────────────────────────────────────────────────────────────────────┤
+# │  Recommended         │  NVIDIA A100 40/80 GB  or  H100 80 GB             │
+# │  High-end consumer   │  NVIDIA RTX 4090  (24 GB)                         │
+# │  Mid-range consumer  │  NVIDIA RTX 3090  (24 GB)                         │
+# ├────────────────────────────────────────────────────────────────────────────┤
+# │  VRAM — fp16         │  ~12 GB   default, matches paper Methods 4.1       │
+# │  VRAM — INT8         │   ~8 GB   via bitsandbytes (load_in_8bit=True)     │
+# │  VRAM — INT4         │   ~5 GB   via bitsandbytes (load_in_4bit=True)     │
+# ├────────────────────────────────────────────────────────────────────────────┤
+# │  CUDA Toolkit        │  11.8  (recommended)  or  12.1                     │
+# │  cuDNN               │  8.6+                                              │
+# │  NVIDIA Driver       │  >= 520.61.05  for CUDA 11.8                       │
+# │                      │  >= 530.30.02  for CUDA 12.1                       │
+# │  NCCL (multi-GPU)    │  2.16+  (only needed for multi-GPU setups)         │
+# └────────────────────────────────────────────────────────────────────────────┘
 #
-#   # Conda environment:
-#   conda env create -f environment.yml
-#   conda activate bop-sap
+# Check your current driver and CUDA version:
+#   nvidia-smi
+#   nvcc --version
 #
+# Check available GPU memory:
+#   nvidia-smi --query-gpu=name,memory.total,memory.free --format=csv
+#
+# Monitor GPU during inference:
+#   watch -n 1 nvidia-smi
+#
+# Select a specific GPU (if you have multiple):
+#   export CUDA_VISIBLE_DEVICES="0"
+
+
 # ==============================================================================
-# MODEL REQUIREMENTS
+# SECTION 3 — PYTORCH INSTALLATION WITH NVIDIA CUDA
 # ==============================================================================
 #
-# 1. GPT-3.5 / GPT-4 / GPT-4o
-#    - Set:  export OPENAI_API_KEY="sk-..."
-#    - No local GPU needed
-#    - Rate limits: GPT-3.5 = 60 rpm | GPT-4/4o = 10,000 rpm (enterprise)
+# Run ONE of the following commands BEFORE pip install -r requirements.txt
 #
-# 2. Cohere Command-R+
-#    - Set:  export COHERE_API_KEY="..."
-#    - No local GPU needed
+# ── CUDA 11.8 (RTX 30xx, A100, V100, older cards with driver >= 520) ──────────
 #
-# 3. LLaMA-3.1-8B-Instruct  (meta-llama/Llama-3.1-8B-Instruct)
-#    - Set:  export HF_TOKEN="hf_..."
-#    - Accept Meta's license at: huggingface.co/meta-llama/Llama-3.1-8B-Instruct
-#    - Hardware (paper setup):  1× NVIDIA A100 80GB
-#    - Hardware (minimum):      1× NVIDIA RTX 3090/4090 (24 GB) for fp16
-#    - VRAM:   ~12 GB (fp16) | ~8 GB (INT8 via bitsandbytes)
-#    - CUDA:   11.8+
-#    - CPU-only supported but very slow
+#   pip install torch==2.1.0 torchvision==0.16.0 torchaudio==2.1.0 \
+#       --index-url https://download.pytorch.org/whl/cu118
 #
+# ── CUDA 12.1 (RTX 40xx, H100, updated A100 with driver >= 530) ───────────────
+#
+#   pip install torch==2.1.0 torchvision==0.16.0 torchaudio==2.1.0 \
+#       --index-url https://download.pytorch.org/whl/cu121
+#
+# ── CUDA 12.4 (latest drivers, RTX 40xx, H100, B100) ─────────────────────────
+#
+#   pip install torch==2.3.0 torchvision==0.18.0 torchaudio==2.3.0 \
+#       --index-url https://download.pytorch.org/whl/cu124
+#
+# ── Conda install (alternative) ───────────────────────────────────────────────
+#
+#   conda install pytorch==2.1.0 torchvision==0.16.0 torchaudio==2.1.0 \
+#       pytorch-cuda=11.8 -c pytorch -c nvidia
+#
+# ── Verify GPU is detected by PyTorch ─────────────────────────────────────────
+#
+#   python -c "
+#   import torch
+#   print('CUDA available    :', torch.cuda.is_available())
+#   print('CUDA version      :', torch.version.cuda)
+#   print('GPU name          :', torch.cuda.get_device_name(0))
+#   print('GPU VRAM (total)  :', round(torch.cuda.get_device_properties(0).total_memory / 1e9, 1), 'GB')
+#   print('PyTorch version   :', torch.__version__)
+#   "
+
+
 # ==============================================================================
-# ENVIRONMENT VARIABLES
+# SECTION 4 — MODEL REQUIREMENTS
 # ==============================================================================
 #
+# ── GPT-3.5  (gpt-3.5-turbo) ──────────────────────────────────────────────────
+#   API key     : export OPENAI_API_KEY="sk-..."
+#   GPU         : Not required  (cloud inference)
+#   Context     : 4,097 tokens
+#   Params      : 175B  (decoder-only, BPE tokenizer, 50,257 vocab)
+#   Rate limit  : 60 req/min  standard | higher with paid tier
+#
+# ── GPT-4  (gpt-4) ────────────────────────────────────────────────────────────
+#   API key     : export OPENAI_API_KEY="sk-..."
+#   GPU         : Not required  (cloud inference)
+#   Context     : 8,192 tokens (gpt-4) | 32,768 tokens (gpt-4-32k)
+#   Architecture: Mixture-of-Experts, sparse activation
+#   Rate limit  : 10,000 req/min  (enterprise tier — paper setup)
+#
+# ── GPT-4o  (gpt-4o) ──────────────────────────────────────────────────────────
+#   API key     : export OPENAI_API_KEY="sk-..."
+#   GPU         : Not required  (cloud inference)
+#   Context     : 128,000 tokens
+#   Architecture: Multimodal unified transformer (text + vision + audio)
+#   Rate limit  : 10,000 req/min  (enterprise tier)
+#
+# ── Cohere Command-R+  (command-r-plus) ───────────────────────────────────────
+#   API key     : export COHERE_API_KEY="..."
+#   GPU         : Not required  (cloud inference, NVIDIA A100 clusters)
+#   Context     : 4,096 tokens
+#   Params      : 52B  (proprietary transformer, optimised for enterprise)
+#   Rate limit  : 10 req/min  trial | production key for higher limits
+#   SDK version : cohere>=4.2.1
+#
+# ── LLaMA-3.1-8B-Instruct  (meta-llama/Llama-3.1-8B-Instruct) ────────────────
+#   HF token    : export HF_TOKEN="hf_..."
+#   License     : Accept at huggingface.co/meta-llama/Llama-3.1-8B-Instruct
+#   GPU         : REQUIRED — NVIDIA GPU (see Section 2)
+#   Params      : 8B  (decoder-only, 32 layers, 4096 hidden dim)
+#   Tokenizer   : SentencePiece, 32,000 vocab, multilingual
+#   Position    : RoPE (Rotary Position Embedding), 8192-token context
+#   Attention   : GQA (Grouped Query Attention), 8 KV heads
+#   Precision   : fp16  default — set LLAMA_HALF_PRECISION=True in config.py
+#
+#   VRAM usage by precision:
+#     fp16  (default) : ~12 GB  [paper setup, Methods 4.1]
+#     INT8            :  ~8 GB  [bitsandbytes, load_in_8bit=True]
+#     INT4            :  ~5 GB  [bitsandbytes, load_in_4bit=True]
+#
+#   Download model (~16 GB safetensors):
+#     python -c "
+#     from huggingface_hub import snapshot_download
+#     import os
+#     snapshot_download('meta-llama/Llama-3.1-8B-Instruct',
+#                       token=os.environ['HF_TOKEN'])
+#     "
+#
+#   Run with INT8 quantisation (lower VRAM, slight quality drop):
+#     from transformers import AutoModelForCausalLM, BitsAndBytesConfig
+#     quant_cfg = BitsAndBytesConfig(load_in_8bit=True)
+#     model = AutoModelForCausalLM.from_pretrained(
+#         "meta-llama/Llama-3.1-8B-Instruct",
+#         quantization_config=quant_cfg,
+#         token=HF_TOKEN,
+#     )
+
+
+# ==============================================================================
+# SECTION 5 — ENVIRONMENT VARIABLES
+# ==============================================================================
+#
+#   # Required — API credentials:
 #   export OPENAI_API_KEY="sk-..."
 #   export COHERE_API_KEY="..."
 #   export HF_TOKEN="hf_..."
 #
-#   # Optional path overrides:
+#   # Optional — NVIDIA GPU selection (if multiple GPUs):
+#   export CUDA_VISIBLE_DEVICES="0"
+#
+#   # Optional — suppress HuggingFace tokenizer parallelism warning:
+#   export TOKENIZERS_PARALLELISM="false"
+#
+#   # Optional — data path overrides:
 #   export BOP_PROMPT_PARTS="Data/prompt_parts.xlsx"
 #   export BOP_TRAINING_CSV="Data/training.csv"
 #   export BOP_VALID_CSV="Data/validation.csv"
 #   export BOP_TESTING_XLS="Data/testing.xlsx"
-#
+
+
 # ==============================================================================
+# SECTION 6 — FULL VERIFIED INSTALLATION (run in order)
+# ==============================================================================
+#
+#   # 1. Create conda environment:
+#   conda create -n bop-sap python=3.10 -y
+#   conda activate bop-sap
+#
+#   # 2. Install PyTorch with NVIDIA CUDA 11.8:
+#   pip install torch==2.1.0 torchvision==0.16.0 torchaudio==2.1.0 \
+#       --index-url https://download.pytorch.org/whl/cu118
+#
+#   # 3. Install all other requirements:
+#   pip install -r requirements.txt
+#
+#   # 4. Set credentials:
+#   export OPENAI_API_KEY="sk-..."
+#   export COHERE_API_KEY="..."
+#   export HF_TOKEN="hf_..."
+#
+#   # 5. Verify GPU and PyTorch:
+#   python -c "
+#   import torch
+#   assert torch.cuda.is_available(), 'CUDA not available — check NVIDIA driver'
+#   print('GPU           :', torch.cuda.get_device_name(0))
+#   print('VRAM          :', round(torch.cuda.get_device_properties(0).total_memory/1e9,1), 'GB')
+#   print('CUDA version  :', torch.version.cuda)
+#   print('PyTorch       :', torch.__version__)
+#   "
+#
+#   # 6. Verify all BOP imports:
+#   python -c "
+#   import openai, cohere, optuna
+#   import transformers, accelerate, bitsandbytes
+#   import pandas, numpy, sklearn, matplotlib
+#   import umap
+#   print('All libraries OK.')
+#   "
+#
+#   # 7. Run optimisation:
+#   python src/scripts/run_optimization.py --model gpt-4o --n_trials 50
+#
