@@ -3,14 +3,13 @@ src/optimization/optimizer.py
 ==============================
 BOP core: Bayesian prompt optimisation using Optuna TPE sampler.
 
-Paper Methods 4.2 / Fig 5:
+Workflow:
   - Sample Role / Aims / Description / Question from Excel (2400 combinations)
   - Generate 15-char ASCII structural anchor per trial
   - System prompt = [ascii_key] + Role + Aims + Description + few-shot
-  - Fitness = macro-F1 on training set (Eq. 7)
+  - Fitness = macro-F1 on training set
   - Validation macro-F1 tracked separately (never fed to Optuna)
   - TPE sampler, 10 startup random trials, 50 total
-  - Convergence typically at 35-45 iterations (paper Fig 2a/2c)
 """
 
 import random
@@ -33,7 +32,7 @@ optuna.logging.set_verbosity(optuna.logging.WARNING)
 
 
 def random_ascii_key(length: int = ASCII_KEY_LENGTH) -> str:
-    """Generate a random ASCII structural anchor — paper core contribution."""
+    """Generate a random ASCII structural anchor."""
     chars = string.ascii_letters + string.digits + string.punctuation
     return "".join(random.choices(chars, k=length))
 
@@ -80,16 +79,13 @@ def run_optimization(
         description = trial.suggest_categorical("instruction", parts["general_instructions"])
         question    = trial.suggest_categorical("question",    parts["user_questions"])
 
-        # ASCII structural anchor — unique per trial
         ascii_key = random_ascii_key()
         trial.set_user_attr("ascii_key", ascii_key)
 
-        # Training macro-F1 → Optuna maximises this
         train_f1 = evaluate_prompt(
             model_name, role, aims, description, question, ascii_key, training_csv,
         )
 
-        # Validation macro-F1 → logged only (paper Fig 2a/2c)
         val_f1 = evaluate_prompt(
             model_name, role, aims, description, question, ascii_key, validation_csv,
         )

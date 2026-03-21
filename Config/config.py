@@ -2,7 +2,7 @@
 Configs/config.py
 =================
 Master configuration for BOP-SAP.
-All hyperparameters match the paper Methods section exactly.
+All hyperparameters are centrally defined here.
 Set API credentials via environment variables — never hardcode secrets.
 """
 
@@ -13,11 +13,11 @@ OPENAI_API_KEY  : str  = os.getenv("OPENAI_API_KEY",  "")
 COHERE_API_KEY  : str  = os.getenv("COHERE_API_KEY",  "")
 HF_TOKEN        : str  = os.getenv("HF_TOKEN",         "")
 
-# ── Relation Labels (paper Fig 1b) ─────────────────────────────────────────────
+# ── Relation Labels ────────────────────────────────────────────────────────────
 RELATIONS : list[str] = ["activation", "inhibition", "phosphorylation"]
 NO_INFO   : str       = "no information"
 
-# ── Standardised Inference Hyperparameters (paper Methods 4.1) ─────────────────
+# ── Standardised Inference Hyperparameters ─────────────────────────────────────
 TEMPERATURE       : float = 0.7
 TOP_P             : float = 0.9
 FREQUENCY_PENALTY : float = 0.0
@@ -31,12 +31,12 @@ COHERE_MODEL_ID : str  = "command-r-plus"
 LLAMA_MAX_NEW_TOKENS  : int  = 4
 LLAMA_HALF_PRECISION  : bool = True    # fp16 — 12 GB VRAM
 
-# ── Optuna / Bayesian Optimisation (paper Methods 4.2) ────────────────────────
-OPTUNA_N_TRIALS         : int = 50    # convergence typically at 35-45 iters
+# ── Optuna / Bayesian Optimisation ────────────────────────────────────────────
+OPTUNA_N_TRIALS         : int = 50
 OPTUNA_N_STARTUP_TRIALS : int = 10    # random trials before TPE activates
 OPTUNA_DIRECTION        : str = "maximize"
 
-# ── ASCII Structural Anchor (paper core contribution) ─────────────────────────
+# ── ASCII Structural Anchor ───────────────────────────────────────────────────
 ASCII_KEY_LENGTH : int = 15           # 15-char random string per trial
 
 # ── Prompt Component Sheet → Column mapping ───────────────────────────────────
@@ -56,7 +56,7 @@ FEW_SHOT_DEMO : str = (
     "Answers must be one of activation, inhibition, phosphorylation or no information."
 )
 
-# ── UMAP Hyperparameters (paper Fig S2/S3) ────────────────────────────────────
+# ── UMAP Hyperparameters ──────────────────────────────────────────────────────
 UMAP_N_NEIGHBORS  : int   = 30
 UMAP_MIN_DIST     : float = 0.1
 UMAP_METRIC       : str   = "cosine"

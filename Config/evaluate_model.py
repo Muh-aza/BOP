@@ -4,7 +4,7 @@ src/scripts/evaluate_model.py
 Evaluate the best BOP prompt on the held-out test set.
 Reads the Best Trial sheet from optimization_results.xlsx,
 runs inference, and reports macro-F1, per-class F1, MCC,
-precision and recall (paper Table / Fig 2 / Fig 4).
+precision and recall.
 
 Usage
 -----
@@ -95,8 +95,7 @@ def main() -> None:
     print(f"\n{'─'*55}")
     print(f"  Results — {args.model}")
     print(f"{'─'*55}")
-    print(f"  Macro F₁  : {metrics['macro_f1']:.4f}  "
-          f"(paper: GPT-4/4o=0.80, LLaMA=0.66, Cohere=0.62)")
+    print(f"  Macro F₁  : {metrics['macro_f1']:.4f}")
     print(f"  Micro F₁  : {metrics['micro_f1']:.4f}")
     print(f"  MCC       : {metrics['mcc']:.4f}")
     print(f"{'─'*55}")

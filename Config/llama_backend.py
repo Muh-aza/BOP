@@ -3,7 +3,7 @@ src/models/llama_backend.py
 ===========================
 LLaMA-3.1-8B-Instruct local inference backend.
 
-Paper Methods 4.1:
+Model details:
   - 8B params, 32 transformer layers, 4096 hidden dim
   - RoPE positional embeddings, 8192-token context
   - fp16 mixed precision, 12 GB VRAM utilisation
@@ -12,7 +12,7 @@ Paper Methods 4.1:
 Two capabilities:
   1. Gene-relation text generation (predict())
   2. Layer-wise hidden-state extraction (build_layer_embeddings())
-     → Used for CHI, cosine similarity, UMAP (Fig 3 / S2-S4)
+     → Used for CHI, cosine similarity, and UMAP analyses
 """
 
 import re
@@ -45,7 +45,7 @@ class LlamaBackend:
         self.model = (
             AutoModelForCausalLM
             .from_pretrained(LLAMA_MODEL_ID, token=HF_TOKEN)
-            .half()        # fp16 — 12 GB VRAM (paper Methods 4.1)
+            .half()        # fp16 — 12 GB VRAM
             .to(self.device)
         )
         self.model.eval()

@@ -2,17 +2,17 @@
 src/scripts/run_embedding_analysis.py
 ======================================
 Full embedding analysis pipeline using LLaMA-3.1-8B-Instruct.
-Reproduces all representation figures from the paper.
+Produces UMAP visualisations, CHI, and cosine similarity analyses.
 
-Figures produced
+Outputs produced
 ----------------
-  Fig 3b   — CHI per layer: baseline vs anchor
-  Fig 3c   — Per-class cosine similarity across layers
-  Fig 3a   — Side-by-side UMAP comparison at best layer
-  Fig S2   — UMAP grid (baseline prompt, 33 panels)
-  Fig S3   — UMAP grid (structural anchor prompt, 33 panels)
-  Fig S4   — Average cosine similarity across all gene-gene pairs
-  Extra    — Per-sample cosine trajectory (Activation/Inhibition/Phosphorylation)
+  - CHI per layer: baseline vs anchor
+  - Per-class cosine similarity across layers
+  - Side-by-side UMAP comparison at best layer
+  - UMAP grid (baseline prompt)
+  - UMAP grid (structural anchor prompt)
+  - Average cosine similarity across all gene-gene pairs
+  - Per-sample cosine trajectory (Activation/Inhibition/Phosphorylation)
 
 Usage
 -----
@@ -50,13 +50,13 @@ from src.analysis.plot_results import (
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(
-        description="BOP embedding analysis — UMAP + cosine (Fig 3 / S2-S4)."
+        description="BOP embedding analysis — UMAP + cosine similarity."
     )
     p.add_argument(
         "--anchor_key", type=str, default="F3eI?%qt,NbnG8U",
         help="Best 15-char ASCII structural anchor from optimisation.",
     )
-    p.add_argument("--test_file",     type=str, default=None)
+    p.add_argument("--test_file", type=str, default=None)
     p.add_argument(
         "--layer", type=int, default=32,
         help="Transformer layer for UMAP side-by-side comparison (default: 32).",
@@ -115,8 +115,8 @@ def main() -> None:
 
     print(f"\n{'='*55}")
     print(f"  BOP Embedding Analysis  (LLaMA-3.1-8B)")
-    print(f"  Anchor key  : {args.anchor_key}")
-    print(f"  Layer       : {args.layer}")
+    print(f"  Anchor key   : {args.anchor_key}")
+    print(f"  Layer        : {args.layer}")
     print(f"  Skip baseline: {args.skip_baseline}")
     print(f"{'='*55}\n")
 
@@ -140,7 +140,7 @@ def main() -> None:
 
     # ── Run predictions (anchor prompt) ───────────────────────────────────────
     print("\nRunning predictions (anchor prompt) ...")
-    df = _run_predictions(backend, df, anchor_sys)
+    df  = _run_predictions(backend, df, anchor_sys)
     acc = (df["Label"] == "Correct").mean()
     print(f"  Accuracy: {acc:.3f}")
 
@@ -156,42 +156,36 @@ def main() -> None:
         print("\nUsing anchor embeddings as baseline proxy (--skip_baseline).")
         emb_baseline = emb_anchor
 
-    # ==========================================================================
-    # Fig 3b — CHI per layer
-    # ==========================================================================
-    print("\n[Fig 3b] CHI — anchor prompt ...")
+    # ── CHI per layer ──────────────────────────────────────────────────────────
+    print("\nComputing CHI — anchor prompt ...")
     ch_vals_anchor, _ = compute_chi_per_layer(
         emb_anchor, df["Ground truth"],
         output_csv=str(CH_VALUES_CSV),
     )
-    print(f"  Terminal CHI (anchor)   : {ch_vals_anchor[-1]:.1f}  [paper: 86.9]")
+    print(f"  Terminal CHI (anchor): {ch_vals_anchor[-1]:.1f}")
 
     if not args.skip_baseline:
-        print("[Fig 3b] CHI — baseline prompt ...")
+        print("Computing CHI — baseline prompt ...")
         ch_vals_base, _ = compute_chi_per_layer(
             emb_baseline, df["Ground truth"],
             output_csv=str(RESULTS_DIR / "CH_values_baseline.csv"),
         )
-        print(f"  Terminal CHI (baseline) : {ch_vals_base[-1]:.1f}  [paper: 66.9]")
+        print(f"  Terminal CHI (baseline): {ch_vals_base[-1]:.1f}")
 
-    # ==========================================================================
-    # Fig 3c — Per-class cosine similarity
-    # ==========================================================================
-    print("\n[Fig 3c] Class-wise cosine similarity ...")
+    # ── Per-class cosine similarity ────────────────────────────────────────────
+    print("\nComputing class-wise cosine similarity ...")
     sim_df = compute_classwise_cosine(
         emb_baseline, emb_anchor, df["Ground truth"],
         output_csv=str(COSINE_SIM_CSV),
     )
     mid_sim = sim_df["average_sim"].iloc[11:21].mean()
-    print(f"  Middle-layer avg cosine : {mid_sim:.4f}  [paper: ~0.955]")
+    print(f"  Middle-layer avg cosine: {mid_sim:.4f}")
 
     plot_classwise_cosine(sim_df, output_png=str(COSINE_CLASS_PNG))
     plot_average_cosine(  sim_df, output_png=str(COSINE_AVG_PNG))
 
-    # ==========================================================================
-    # Cosine trajectory — per gene-pair, layer by layer
-    # ==========================================================================
-    print("\n[Extra] Cosine trajectory per gene-pair ...")
+    # ── Cosine trajectory per gene-pair ───────────────────────────────────────
+    print("\nComputing cosine trajectory per gene-pair ...")
     sample_indices = _pick_samples(df)
     print(f"  Samples: {sample_indices}")
     plot_cosine_trajectories(
@@ -200,10 +194,8 @@ def main() -> None:
         output_png  = str(COSINE_TRAJ_PNG),
     )
 
-    # ==========================================================================
-    # Fig S3 — UMAP grid (anchor prompt)
-    # ==========================================================================
-    print("\n[Fig S3] UMAP grid — Structural Anchor ...")
+    # ── UMAP grid — anchor prompt ──────────────────────────────────────────────
+    print("\nGenerating UMAP grid — Structural Anchor ...")
     plot_umap_grid(
         emb_anchor, df, ch_vals_anchor,
         title      = "UMAP Grid — Structural Anchor Prompt (LLaMA-3.1-8B)",
@@ -211,20 +203,16 @@ def main() -> None:
     )
 
     if not args.skip_baseline:
-        # ======================================================================
-        # Fig S2 — UMAP grid (baseline prompt)
-        # ======================================================================
-        print("\n[Fig S2] UMAP grid — Baseline Prompt ...")
+        # ── UMAP grid — baseline prompt ────────────────────────────────────────
+        print("\nGenerating UMAP grid — Baseline Prompt ...")
         plot_umap_grid(
             emb_baseline, df, ch_vals_base,
             title      = "UMAP Grid — Baseline Prompt (LLaMA-3.1-8B)",
             output_png = str(UMAP_BASELINE_PNG),
         )
 
-        # ======================================================================
-        # Fig 3a — Side-by-side UMAP comparison
-        # ======================================================================
-        print(f"\n[Fig 3a] UMAP comparison at layer {args.layer} ...")
+        # ── UMAP side-by-side comparison ───────────────────────────────────────
+        print(f"\nGenerating UMAP comparison at layer {args.layer} ...")
         plot_umap_comparison(
             emb_baseline, emb_anchor, df,
             layer      = args.layer,

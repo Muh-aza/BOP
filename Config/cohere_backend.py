@@ -3,7 +3,7 @@ src/models/cohere_backend.py
 ============================
 Cohere Command-R+ backend.
 
-Paper Methods 4.1:
+Model details:
   - 52B parameter model optimised for enterprise applications
   - 4096-token context, custom tokenizer
   - Python SDK v4.2.1 with automatic retry and connection pooling

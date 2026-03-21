@@ -2,12 +2,6 @@
 src/analysis/umap_analysis.py
 ==============================
 UMAP-based visualisation of hidden-state embeddings across transformer layers.
-Reproduces Fig S2 (baseline) and Fig S3 (anchor) from the paper.
-
-Paper quote:
-  "The UMAP visualizations provide geometric intuition for these
-   quantitative improvements through 2D projections of high-dimensional
-   hidden states."
 
 UMAP settings:
   n_neighbors=30, min_dist=0.1, metric='cosine', random_state=42
@@ -47,14 +41,14 @@ def plot_umap_grid(
     output_png: str | None = None,
 ) -> None:
     """
-    5-column UMAP grid — one panel per transformer layer (Fig S2/S3).
+    5-column UMAP grid — one panel per transformer layer.
 
     Parameters
     ----------
     emb        : (num_layers, num_rows, hidden_dim)
     df         : DataFrame with 'Ground truth' and 'Label' columns
     ch_vals    : CHI per layer from chi_analysis.compute_chi_per_layer()
-    title      : Figure suptitle (e.g. 'Baseline' or 'Structural Anchor')
+    title      : Suptitle for the grid
     output_png : Save path at 600 dpi
     """
     num_layers = emb.shape[0]
@@ -99,7 +93,7 @@ def plot_umap_comparison(
     output_png:   str | None = None,
 ) -> None:
     """
-    Side-by-side UMAP: baseline vs structural anchor at a chosen layer (Fig 3a).
+    Side-by-side UMAP: baseline vs structural anchor at a chosen layer.
     """
     fig, axes = plt.subplots(1, 2, figsize=(16, 7))
     for ax, emb, ttl in zip(

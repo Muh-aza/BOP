@@ -21,11 +21,11 @@ def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="BOP — Bayesian Prompt Optimisation")
     p.add_argument("--model", type=str, default="gpt-4o",
                    choices=["gpt-3.5", "gpt-4", "gpt-4o", "cohere", "llama3"])
-    p.add_argument("--n_trials",      type=int, default=50)
-    p.add_argument("--excel_path",    type=str, default=None)
-    p.add_argument("--training_csv",  type=str, default=None)
-    p.add_argument("--validation_csv",type=str, default=None)
-    p.add_argument("--output_path",   type=str, default=None)
+    p.add_argument("--n_trials",       type=int, default=50)
+    p.add_argument("--excel_path",     type=str, default=None)
+    p.add_argument("--training_csv",   type=str, default=None)
+    p.add_argument("--validation_csv", type=str, default=None)
+    p.add_argument("--output_path",    type=str, default=None)
     return p.parse_args()
 
 
@@ -35,7 +35,7 @@ def main() -> None:
     print(f"\n{'='*55}")
     print(f"  BOP-SAP — Bayesian Prompt Optimisation")
     print(f"  Model   : {args.model}")
-    print(f"  Trials  : {args.n_trials}  (convergence ~35-45)")
+    print(f"  Trials  : {args.n_trials}")
     print(f"{'='*55}\n")
 
     study = run_optimization(

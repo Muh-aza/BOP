@@ -14,12 +14,6 @@ BOP-SAP is an automated, model-agnostic framework for optimising discrete prompt
 
 **Supported models:** GPT-3.5 · GPT-4 · GPT-4o · Cohere Command-R+ · LLaMA-3.1-8B
 
-**Key results (paper):**
-- GPT-4 / GPT-4o macro-F1: **0.80** | LLaMA-3.1: **0.66** | Cohere: **0.62**
-- CHI: baseline **66.9** → anchor **86.9** (+2.28×)
-- Cosine similarity: consistently **>0.98** across all transformer layers
-- Convergence: **35–45 iterations** across all tested architectures
-
 ---
 
 ## 📁 Project Structure
@@ -42,22 +36,22 @@ BOP/
 │   │
 │   ├── optimization/
 │   │   ├── optimizer.py       # Optuna TPE loop + ASCII anchor + Excel save
-│   │   └── fitness.py         # macro-F1 evaluator (paper Eq. 7)
+│   │   └── fitness.py         # macro-F1 evaluator
 │   │
 │   ├── analysis/
-│   │   ├── chi_analysis.py    # CHI per layer (Fig 3b, Eq. 12)
-│   │   ├── cosine_analysis.py # cosine similarity + gene trajectory (Fig 3c/S4)
-│   │   ├── umap_analysis.py   # UMAP grid + comparison (Fig S2/S3/3a)
+│   │   ├── chi_analysis.py    # Calinski-Harabász Index per layer
+│   │   ├── cosine_analysis.py # cosine similarity + gene trajectory
+│   │   ├── umap_analysis.py   # UMAP grid + side-by-side comparison
 │   │   └── plot_results.py    # convergence, cosine plots, trajectory plots
 │   │
 │   ├── utils/
-│   │   ├── metrics.py         # F1/macro/micro/MCC/precision/recall (Eq. 9-14)
+│   │   ├── metrics.py         # F1/macro/micro/MCC/precision/recall
 │   │   └── normaliser.py      # LLM output → canonical label + GPT fallback
 │   │
 │   └── scripts/
-│       ├── run_optimization.py      # CLI: prompt optimisation
-│       ├── evaluate_model.py        # CLI: test-set evaluation
-│       └── run_embedding_analysis.py# CLI: UMAP + cosine analysis
+│       ├── run_optimization.py        # CLI: prompt optimisation
+│       ├── evaluate_model.py          # CLI: test-set evaluation
+│       └── run_embedding_analysis.py  # CLI: UMAP + cosine analysis
 │
 ├── Data/dataset/Dataset/
 │   ├── prompt_parts.xlsx      # SAP components (roles/tasks/instructions/questions)
@@ -95,7 +89,6 @@ export HF_TOKEN="hf_..."
 ### 3. Run optimisation
 
 ```bash
-# Any of the 5 models:
 python src/scripts/run_optimization.py --model gpt-4o   --n_trials 50
 python src/scripts/run_optimization.py --model gpt-4    --n_trials 50
 python src/scripts/run_optimization.py --model gpt-3.5  --n_trials 50
@@ -109,7 +102,7 @@ python src/scripts/run_optimization.py --model llama3   --n_trials 50
 python src/scripts/evaluate_model.py --model gpt-4o
 ```
 
-### 5. Run embedding analysis (Fig 3 / S2-S4)
+### 5. Run embedding analysis
 
 ```bash
 # Full pipeline:
@@ -128,13 +121,13 @@ python src/scripts/run_embedding_analysis.py --anchor_key "F3eI?%qt,NbnG8U" --sk
 | `Result/optimization_results.xlsx` | All Optuna trials + Best Trial |
 | `Result/evaluation_results.xlsx` | Test predictions + metrics |
 | `Result/CH_values.csv` | Calinski–Harabász index per layer |
-| `Result/cosine_similarity.csv` | Per-class cosine sim per layer |
+| `Result/cosine_similarity.csv` | Per-class cosine similarity per layer |
 | `Result/cosine_trajectory.xlsx` | Per gene-pair cosine trajectory |
-| `Result/umap_grid_anchor_S3.png` | 33-panel UMAP — anchor prompt (600 dpi) |
-| `Result/umap_grid_baseline_S2.png` | 33-panel UMAP — baseline prompt (600 dpi) |
+| `Result/umap_grid_anchor.png` | UMAP grid — anchor prompt (600 dpi) |
+| `Result/umap_grid_baseline.png` | UMAP grid — baseline prompt (600 dpi) |
 | `Result/umap_comparison.png` | Side-by-side UMAP baseline vs anchor |
-| `Result/cosine_classwise_3c.png` | Per-class cosine similarity curve |
-| `Result/cosine_average_S4.png` | Average cosine sim all gene pairs |
+| `Result/cosine_classwise.png` | Per-class cosine similarity curve |
+| `Result/cosine_average.png` | Average cosine similarity all gene pairs |
 | `Result/cosine_trajectory.png` | Per-sample cosine trajectory |
 | `Result/convergence_curve.png` | Train vs val F1 across iterations |
 

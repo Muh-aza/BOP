@@ -1,7 +1,7 @@
 """
 Configs/model_config.py
 =======================
-Per-model settings for all five LLMs evaluated in the paper (Methods 4.1).
+Per-model settings for all five LLMs evaluated in BOP-SAP.
 
 Models:
   GPT-3.5  — 175B params, BPE tokenizer, 4097-token context

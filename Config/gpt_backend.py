@@ -3,7 +3,7 @@ src/models/gpt_backend.py
 =========================
 OpenAI backend for GPT-3.5 / GPT-4 / GPT-4o.
 
-Paper Methods 4.1:
+Retry strategy:
   - Max 5 retries with exponential backoff (delays 1-60 s)
   - Temperature = 0.7, top_p = 0.9, max_tokens = 512
   - Frequency penalty = 0.0, presence penalty = 0.0

@@ -2,10 +2,10 @@
 src/analysis/plot_results.py
 =============================
 All result plots NOT covered by umap_analysis.py:
-  - Convergence curves: train vs val F1 across iterations  (Fig 2a / 2c / S1)
-  - Per-class cosine similarity across layers              (Fig 3c)
-  - Average cosine similarity across all gene-gene pairs   (Fig S4)
-  - Per-sample cosine trajectory with gene labels          (Extra)
+  - Convergence curves: train vs val F1 across iterations
+  - Per-class cosine similarity across layers
+  - Average cosine similarity across all gene-gene pairs
+  - Per-sample cosine trajectory with gene labels
 """
 
 import numpy as np
@@ -13,11 +13,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from Configs.config import COLORS, MARKERS, PLOT_DPI, RELATIONS
-from Configs.paths_config import CONVERGENCE_PNG, COSINE_CLASS_PNG, COSINE_AVG_PNG, COSINE_TRAJ_PNG, TRAJECTORY_XLS
+from Configs.paths_config import (
+    CONVERGENCE_PNG, COSINE_CLASS_PNG, COSINE_AVG_PNG,
+    COSINE_TRAJ_PNG, TRAJECTORY_XLS,
+)
 from src.analysis.cosine_analysis import compute_sample_cosine_trajectory
 
 
-# ── Convergence curve (Fig 2a / 2c) ───────────────────────────────────────────
 def plot_convergence(
     study_df:   pd.DataFrame,
     model_name: str,
@@ -48,16 +50,15 @@ def plot_convergence(
     print(f"  ✔ Convergence curve saved → {path}")
 
 
-# ── Per-class cosine similarity (Fig 3c) ──────────────────────────────────────
 def plot_classwise_cosine(
     sim_df:     pd.DataFrame,
     output_png: str | None = None,
 ) -> None:
     """Line plot of per-class cosine similarity across transformer layers."""
     rel_colors = {
-        "activation": "steelblue",
-        "inhibition": "firebrick",
-        "phosphorylation": "forestgreen",
+        "activation":     "steelblue",
+        "inhibition":     "firebrick",
+        "phosphorylation":"forestgreen",
     }
     fig, ax = plt.subplots(figsize=(10, 5))
     for rel in RELATIONS:
@@ -78,22 +79,18 @@ def plot_classwise_cosine(
     print(f"  ✔ Class-wise cosine saved → {path}")
 
 
-# ── Average cosine similarity (Fig S4) ────────────────────────────────────────
 def plot_average_cosine(
     sim_df:     pd.DataFrame,
     output_png: str | None = None,
 ) -> None:
-    """
-    Average cosine similarity across all gene-gene pairs per layer.
-    Paper: Early=0.925-0.935, Middle=~0.955, Deep=0.91-0.95.
-    """
+    """Average cosine similarity across all gene-gene pairs per layer."""
     n = len(sim_df)
     fig, ax = plt.subplots(figsize=(10, 5))
     ax.plot(sim_df["Layer"], sim_df["average_sim"],
             color="darkorchid", linewidth=2.5, marker="o", markersize=4)
-    ax.axvspan(0,  10, alpha=0.07, color="blue",  label="Early  (0-10):  0.925-0.935")
-    ax.axvspan(11, 20, alpha=0.07, color="green", label="Middle (11-20): ~0.955")
-    ax.axvspan(25, n,  alpha=0.07, color="red",   label="Deep   (25-32): 0.91-0.95")
+    ax.axvspan(0,  10, alpha=0.07, color="blue",  label="Early layers  (0-10)")
+    ax.axvspan(11, 20, alpha=0.07, color="green", label="Middle layers (11-20)")
+    ax.axvspan(25, n,  alpha=0.07, color="red",   label="Deep layers   (25+)")
     ax.set_xlabel("Transformer Layer", fontsize=12)
     ax.set_ylabel("Average Cosine Similarity", fontsize=12)
     ax.set_title("Average Cosine Similarity — All Gene–Gene Pairs\n"
@@ -107,7 +104,6 @@ def plot_average_cosine(
     print(f"  ✔ Average cosine saved → {path}")
 
 
-# ── Per-sample cosine trajectory (gene-pair, layer by layer) ──────────────────
 def plot_cosine_trajectories(
     emb_baseline:   np.ndarray,
     emb_anchor:     np.ndarray,
@@ -144,7 +140,6 @@ def plot_cosine_trajectories(
         ax.fill_between(layers_arr, traj, 0.98,
                         where=(traj < 0.98), alpha=0.15, color=color)
 
-        # Annotate min / max
         min_l = int(np.argmin(traj)); max_l = int(np.argmax(traj))
         ax.annotate(f"min={traj[min_l]:.3f}", xy=(min_l, traj[min_l]),
                     xytext=(min_l + 1, traj[min_l] - 0.01), fontsize=8, color="red",
@@ -169,7 +164,6 @@ def plot_cosine_trajectories(
     plt.show()
     print(f"  ✔ Trajectory plot saved → {path}")
 
-    # Save to Excel
     traj_df = pd.DataFrame({"Layer": layers_arr})
     for rel, traj in all_trajs.items():
         traj_df[f"{rel}_cosine"] = traj

@@ -2,7 +2,7 @@
 src/optimization/fitness.py
 ============================
 Evaluate one candidate SAP configuration on a labelled CSV.
-Returns macro-F1 — the Optuna fitness signal (paper Equation 7).
+Returns macro-F1 — the Optuna fitness signal.
 """
 
 import pandas as pd

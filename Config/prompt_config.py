@@ -2,8 +2,7 @@
 Configs/prompt_config.py
 ========================
 Structural Anchor Prompt (SAP) template.
-Four-component design from paper Methods 4.2 / Fig 1d:
-    Role | Aims | Description | Question
+Four-component design: Role | Aims | Description | Question
 """
 
 from dataclasses import dataclass
@@ -13,7 +12,7 @@ from Configs.config import FEW_SHOT_DEMO
 @dataclass
 class SAPTemplate:
     """
-    Four-component SAP as described in the paper.
+    Four-component SAP structure.
 
     Fields
     ------

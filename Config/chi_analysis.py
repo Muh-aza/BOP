@@ -1,17 +1,12 @@
 """
 src/analysis/chi_analysis.py
 =============================
-Calinski-Harabász Index (CHI) per transformer layer — paper Fig 3b / Eq. 12.
+Calinski-Harabász Index (CHI) per transformer layer.
 
 CHI = [Tr(Bk) / Tr(Wk)] × [(n-k) / (k-1)]
 
 where Bk = between-class scatter, Wk = within-class scatter.
-Higher CHI → better-separated, more compact clusters.
-
-Paper results:
-  Baseline (layer 33) : CHI ≈ 66.9
-  Anchor   (layer 33) : CHI ≈ 86.9  (2.28× improvement)
-  Linear trendline slopes: anchor=1.12 vs baseline=0.48
+Higher CHI indicates better-separated, more compact clusters.
 """
 
 import numpy as np

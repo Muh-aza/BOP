@@ -2,19 +2,9 @@
 src/analysis/cosine_analysis.py
 ================================
 Cosine similarity analysis between baseline and anchor-prompt embeddings.
-Covers Fig 3c and Fig S4 from the paper.
 
-Paper Equation 13:  Cosine Similarity = (A · B) / (‖A‖ × ‖B‖)
+Cosine Similarity = (A · B) / (‖A‖ × ‖B‖)
 where A and B are hidden-state embedding vectors for gene-gene interactions.
-
-Paper results (Fig 3c):
-  All classes stay > 0.98 across layers.
-  Slight dip in deepest layers reflects task-relevant differentiation.
-
-Paper results (Fig S4 — average across all gene-gene pairs):
-  Early layers  (0-10)  : 0.925 - 0.935
-  Middle layers (11-20) : ~0.955 peak
-  Deep layers   (25-32) : decline 0.95 → 0.91
 """
 
 import numpy as np
