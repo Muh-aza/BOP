@@ -81,19 +81,6 @@ The BOP-SAP framework uses curated **biomedical signaling pathway datasets** con
 | Endocytosis | [![Dataset](https://img.shields.io/badge/View-Dataset-blue)](https://github.com/Muh-aza/BOP/tree/main/Data/dataset/data2) |
 
 
-
-
-## 📖 Citation
-
-```bibtex
-@article{Azam2026BOPSAP,
-  title={Bayesian Optimization of String-Based Structural Anchor Prompting for Large Language Models},
-  author={Muhammad Azam and Shuai Zeng and Hasanain Aldihis and Dong Xu},
-  journal={Under Review},
-  year={2026}
-}
-```
-
 }
 
 
